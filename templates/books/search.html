@@ -4,4 +4,73 @@
 
 <h1> books/search </h1>
 
+            <div class="search">
+              <form action="#">
+                <!-- Form Row 1 -->
+                <div class="form-row">
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">Title</label>
+                    <input
+                      type="text"
+                      name="keywords"
+                      class="form-control"
+                      placeholder="Title"
+                    />
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">Author</label>
+                    <input
+                      type="text"
+                      name="title"
+                      class="form-control"
+                      placeholder="Author"
+                    />
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">ISBN</label>
+                    <input
+                      type="text"
+                      name="title"
+                      class="form-control"
+                      placeholder="ISBN"
+                    />
+                  </div>
+
+                </div>
+                <!-- Form Row 2 -->
+                <div class="form-row">
+
+                  <div class="col-md-6 mb-3">
+                    <label class="sr-only">Category</label>
+                    <select name="language" class="form-control">
+                      <option selected="true" disabled="disabled">
+                        (All)
+                      </option>
+                      <option value="1">History</option>
+                      <option value="2">Science</option>
+
+                    </select>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label class="sr-only">Language</label>
+                    <select name="language" class="form-control">
+                      <option selected="true" disabled="disabled">
+                        (All)
+                      </option>
+                      <option value="1">English</option>
+                      <option value="2">Chinese</option>
+
+                    </select>
+                  </div>
+
+                </div>
+                <button class="btn btn-secondary btn-block mt-4" type="submit">
+                  Submit form
+                </button>
+              </form>
+            </div>   
+
 {% endblock content  %}
