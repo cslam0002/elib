@@ -6,12 +6,6 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 
-def edit(request):
-    return render(request, 'accounts/edit.html')
-
-def listing(request):
-    return render(request, 'accounts/listing.html')
-
 def login(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -20,8 +14,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, "You are logged in !")
-            # return redirect("accounts:dashboard")
-            return redirect("pages:index") 
+            return redirect("accounts:dashboard")
         else:
             messages.error(request, "Invalid credentials !")
             return redirect("accounts:login")
@@ -61,6 +54,9 @@ def register(request):
         return render(request, 'accounts/register.html')
     return render(request, 'accounts/register.html')
 
+def dashboard(request):
+    return render(request, 'accounts/dashboard.html')
+
 def reset(request):
     return render(request, 'accounts/reset.html')
 
@@ -69,3 +65,9 @@ def search(request):
 
 def update(request):
     return render(request, 'accounts/update.html')
+
+def edit(request):
+    return render(request, 'accounts/edit.html')
+
+def listing(request):
+    return render(request, 'accounts/listing.html')
