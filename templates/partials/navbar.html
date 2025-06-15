@@ -7,10 +7,22 @@
                 <li class="nav-item"><a href={% url "pages:index" %} class="nav-link">Home</a></li>
                 <li class="nav-item"><a href={% url "pages:about" %} class="nav-link">About</a></li>
 
+                {% if user.is_authenticated %}
+                <!-- logout --> 
+                <li class="nav-item">
+                    <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+                        <i class="fas fa-sign-out-alt">Logout</i>
+                    </a>
+                    <form action="{% url 'accounts:logout' %}" method="POST" id="logout">
+                        {% csrf_token %}
+                        <input type="hidden">
+                    </form>
+                </li>
+                <!-- end of logout -->
+                {% else %}
                 <li class="nav-item"><a href={% url "accounts:register" %} class="nav-link">Register</a></li>
                 <li class="nav-item"><a href={% url "accounts:login"    %} class="nav-link">Login</a></li>
-                <li class="nav-item"><a href={% url "pages:index"       %} class="nav-link">Logout</a></li>
+                {% endif %}
             </ul>
-           
         </div>  
     </nav>
