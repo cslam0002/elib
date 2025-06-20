@@ -1,3 +1,5 @@
+{% load humanize %}
+
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
         <div class="container">
 
@@ -11,9 +13,18 @@
                 {% if user.is_authenticated %}
                 <li {% if 'dashboard' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
                     <a href={% url "accounts:dashboard" %}
-                       class="nav-link">DASHBOARD ({% if user.first_name %} {{user.first_name}} {% else %} ADMIN {% endif %})     
+                       class="nav-link">DASHBOARD ({% if user.first_name %} {{user.first_name | title}} {% else %} ADMIN {% endif %})     
                     </a>
                 </li> 
+                
+                {% if user.is_staff %}
+                <li {% if 'books/search' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}><a href={% url "books:search" %} class="nav-link">Search Book</a></li>
+                <li {% if 'books/edit' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}><a href={% url "books:edit" %} class="nav-link">Add Book</a></li>
+                <li {% if 'accounts' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}><a href={% url "accounts:search" %} class="nav-link">ACCOUNTS</a></li>
+                {% else %}
+                <li {% if 'books/search' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}><a href={% url "books:search" %} class="nav-link">Search Book</a></li>
+                {% endif %}
+
                 <!-- logout --> 
                 <li class="nav-item mr-3">
                     <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">

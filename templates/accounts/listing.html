@@ -2,72 +2,66 @@
 {% block title %} List Accounts {% endblock title %}
 {% block content %}
 
-<h1> accounts/listing </h1>
-
-    <section id="dashboard" class="py-4">
-      <div class="container hero">
+    <section id="dashboard" class="hero">
+      <div class="container">
         <div class="row">
           <div class="col-md-12">
             <h2>Welcome </h2>
 
-
+            {% if listings %}
             <table class="table">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>User Name</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                  <th>Address</th>
-                  <th>Date Join</th>
-                  <th>Last Login</th>
                   <th>status</th>
+                  <th>User Name</th>
+                  <th>Last Name</th>
+                  <th>Last Login</th>
                 </tr>
               </thead>
-              
               <tbody>
+                {% for listing in listings %}
                 <tr>
-                  <td>1</td>
-                  <td>Tom</td>
-                  <td>Wu</td>
-                  <td>tomwu001</td>
-                  <td>54458796</td>
-                  <td>tomwu@gmail.com</td>
-                  <td>90 Sam Tsui Po</td>
-                  <td>22 Mar 2011</td>
-                  <td>21 Jan 2000</td>
-                  <td>True</td>
+                  <td>{{ listing.id }}</td>
+                  <td>{{ listing.is_active }}</td>
+                  <td>{{ listing.username }}</td>
+                  <td>{{ listing.last_name | title}}</td>
+                  <td>{{ listing.last_login }}</td>
                   <td>
-                    <a class="btn btn-light" href="#">View Listing</a>
-                    <button class="btn btn-danger" data-url="#" data-toggle="modal" data-target="#deleteConfirmModal" data-id="{{ contact.id}}">Delete</button>
-                    <a href="#" class="btn btn-success">Edit</a>
+                    <button class="btn btn-danger" data-url="{% url 'accounts:delete' listing.id %}" data-id="{{ listing.id }}" data-toggle="modal" data-target="#deleteConfirmModal" >Delete</button>
                   </td>
                 </tr>
-                <tr>
-                  <td>12</td>
-                  <td>Any</td>
-                  <td>Lau</td>
-                  <td>andylau001</td>
-                  <td>54452256</td>
-                  <td>andylau@gmail.com</td>
-                  <td>22 Tai Po</td>
-                  <td>2 Mar 2001</td>
-                  <td>21 Feb 2010</td>
-                  <td>True</td>
-                  <td>
-                    <a class="btn btn-light" href="#">View Listing</a>
-                    <button class="btn btn-danger" data-url="#" data-toggle="modal" data-target="#deleteConfirmModal" data-id="{{ contact.id}}">Delete</button>
-                    <a href="#" class="btn btn-success">Edit</a>
-                  </td>
-                </tr>
-
+                {% endfor %}
             </tbody>  
             </table>
+            {% endif %}
           </div>
         </div>
       </div>
+
+        
+    <div class="modal fade" id="deleteConfirmModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete ?</p>
+            <a id="confirmDeleteBtn" class="btn btn-danger" href="#">
+              Yes
+            </a>
+            <button class="btn btn-info" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
     </section>
 
 {% endblock content  %}

@@ -7,12 +7,3 @@ def index(request):
 
 def about(request):
     return render(request, 'pages/about.html')
-
-def manage(request):
-    return render(request, 'pages/manage.html')
-
-def books(request):
-    return render(request, 'pages/books.html')
-
-def accounts(request):
-    return render(request, 'pages/accounts.html')

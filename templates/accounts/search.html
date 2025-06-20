@@ -2,29 +2,19 @@
 {% block title %} Search {% endblock %}
 {% block content %}
 
-<h1> accounts/search </h1>
 <section class="hero">
             <div class="search">
-              <form action="#">
+              <form action="{% url "accounts:search" %}"  method="POST">
+                {% csrf_token %}
                 <!-- Form Row 1 -->
                 <div class="form-row">
                   <div class="col-md-4 mb-3">
                     <label class="sr-only">First Name</label>
                     <input
                       type="text"
-                      name="keywords"
+                      name="first_name"
                       class="form-control"
                       placeholder="First Name"
-                    />
-                  </div>
-
-                  <div class="col-md-4 mb-3">
-                    <label class="sr-only">Phone</label>
-                    <input
-                      type="text"
-                      name="title"
-                      class="form-control"
-                      placeholder="Phone"
                     />
                   </div>
 
@@ -32,9 +22,19 @@
                     <label class="sr-only">User Name</label>
                     <input
                       type="text"
-                      name="title"
+                      name="username"
                       class="form-control"
                       placeholder="User Name"
+                    />
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">Phone</label>
+                    <input
+                      type="text"
+                      name="phone"
+                      class="form-control"
+                      placeholder="Phone"
                     />
                   </div>
 
@@ -45,7 +45,7 @@
                     <label class="sr-only">Last Name</label>
                     <input
                       type="text"
-                      name="keywords"
+                      name="last_name"
                       class="form-control"
                       placeholder="Last Name"
                     />
@@ -55,7 +55,7 @@
                     <label class="sr-only">Email</label>
                     <input
                       type="text"
-                      name="title"
+                      name="email"
                       class="form-control"
                       placeholder="Email"
                     />
@@ -67,6 +67,63 @@
                 </button>
               </form>
             </div>   
+
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Welcome </h2>
+
+            {% if listings %}
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>status</th>
+                  <th>User Name</th>
+                  <th>Last Name</th>
+                  <th>Last Login</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for listing in listings %}
+                <tr>
+                  <td>{{ listing.id }}</td>
+                  <td>{{ listing.is_active }}</td>
+                  <td>{{ listing.username }}</td>
+                  <td>{{ listing.last_name | title}}</td>
+                  <td>{{ listing.last_login }}</td>
+                  <td>
+                    <button class="btn btn-danger" data-url="{% url 'accounts:delete' listing.id %}" data-id="{{ listing.id }}" data-toggle="modal" data-target="#deleteConfirmModal" >Delete</button>
+                  </td>
+                </tr>
+                {% endfor %}
+            </tbody>  
+            </table>
+            {% endif %}
+          </div>
+        </div>         
+        
+        
+    <div class="modal fade" id="deleteConfirmModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete ?</p>
+            <a id="confirmDeleteBtn" class="btn btn-danger" href="#">
+              Yes
+            </a>
+            <button class="btn btn-info" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
           </section>
 
 

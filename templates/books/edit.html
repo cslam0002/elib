@@ -2,18 +2,18 @@
 {% block title %} Modify {% endblock %}
 {% block content %}
 
-<h1> books/edit </h1>
           <!-- Hero Section -->
           <section class="hero">
             <div class="search">
-              <form action="#">
+              <form action="{% url "books:add" %}" method="POST">
+                {% csrf_token %}
                 <!-- Form Row 1 -->
                 <div class="form-row">
                   <div class="col-md-4 mb-3">
                     <label class="sr-only">Title</label>
                     <input
                       type="text"
-                      name="keywords"
+                      name="title"
                       class="form-control"
                       placeholder="Title"
                     />
@@ -23,7 +23,7 @@
                     <label class="sr-only">Author</label>
                     <input
                       type="text"
-                      name="title"
+                      name="author"
                       class="form-control"
                       placeholder="Author"
                     />
@@ -33,7 +33,7 @@
                     <label class="sr-only">ISBN</label>
                     <input
                       type="text"
-                      name="title"
+                      name="isbn"
                       class="form-control"
                       placeholder="ISBN"
                     />
@@ -43,28 +43,38 @@
                 <!-- Form Row 2 -->
                 <div class="form-row">
 
-                  <div class="col-md-6 mb-3">
+                  <div class="col-md-4 mb-3">
                     <label class="sr-only">Category</label>
-                    <select name="language" class="form-control">
-                      <option selected="true" disabled="disabled">
-                        (All)
+                    <select name="category" class="form-control">
+                      <option {% if not values.category %} selected="true" {% endif %} value="">
+                        (Any Category)
                       </option>
-                      <option value="1">History</option>
-                      <option value="2">Science</option>
-
+                      {%  for key, value in category_choices.items %}
+                      <option value="{{key}}" {% if key == values.category %} selected="true" {% endif %}>{{value}}</option>
+                      {% endfor %}
                     </select>
                   </div>
 
-                  <div class="col-md-6 mb-3">
+                  <div class="col-md-4 mb-3">
                     <label class="sr-only">Language</label>
                     <select name="language" class="form-control">
-                      <option selected="true" disabled="disabled">
-                        (All)
+                      <option {% if not values.language %} selected="true" {% endif %} value="">
+                        (Any language)
                       </option>
-                      <option value="1">English</option>
-                      <option value="2">Chinese</option>
-
+                      {%  for key, value in language_choices.items %}
+                      <option value="{{key}}" {%if key == values.language %} selected="true" {% endif %}>{{value}}</option>
+                      {% endfor %}
                     </select>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">Year</label>
+                    <input
+                      type="text"
+                      name="year"
+                      class="form-control"
+                      placeholder="Year"
+                    />
                   </div>
 
                 </div>

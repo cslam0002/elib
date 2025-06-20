@@ -5,7 +5,45 @@
 
 <!-- Hero Section -->
 <section class="hero">
-<h1> accounts/dashboard </h1>
+
+        {% if listings %}
+        <div class="row">
+          <div class="col-md-12">
+            <h2> Borrow Book List </h2>
+
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>User</th>
+                  <th>Due Date</th>
+                  <th>Status</th>
+
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for listing in listings %}
+                <tr>
+                  <td>{{ listing.book.id }}</td>
+                  <td>{{ listing.book.title }}</td>
+                  <td>{{ listing.user.first_name }}</td>
+                  <td>{{ listing.due_date }}</td>
+                  <td>{{ listing.status }}</td>
+                  <td>
+                    <a class="btn btn-primary" href="{% url 'books:check_in' listing.book.id %}">Book Return</a>
+                </tr>
+                {% endfor %}
+
+            </tbody>  
+            </table>
+          </div>
+        </div>
+        {% else %}   
+        <h2> Welcome {{ user.first_name | title }} </h2>    
+        {% endif %}
 </section>
 
 {% endblock content  %}

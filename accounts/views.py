@@ -1,8 +1,11 @@
 from django.shortcuts import render
 
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+
+
+from records.models import BorrowRecord
 
 # Create your views here.
 
@@ -50,18 +53,51 @@ def register(request):
         else:
             messages.error(request, "Passwords do not match !")
             return redirect("accounts:register")
-    else:       
+    else:
         return render(request, 'accounts/register.html')
     return render(request, 'accounts/register.html')
 
+def delete(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    user.delete()
+
+    listings = BorrowRecord.objects.filter(status__iexact='Borrowed')
+    if (not request.user.is_staff):
+        listings = listings.filter(user=request.user)
+    context = { "listings" : listings }
+    return render(request, 'accounts/dashboard.html', context)
+
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    listings = BorrowRecord.objects.filter(status__iexact='Borrowed')
+    if (not request.user.is_staff):
+        listings = listings.filter(user=request.user)
+    context = { "listings" : listings }
+    return render(request, 'accounts/dashboard.html', context)
 
 def reset(request):
     return render(request, 'accounts/reset.html')
 
 def search(request):
-    return render(request, 'accounts/search.html')
+    listings = User.objects.order_by('username')
+    if (request.method == "POST"):
+        if 'username' in request.POST:
+            username = request.POST['username']
+            if username:      
+                listings = listings.filter(username__icontains=username)
+        if 'first_name' in request.POST:
+            first_name = request.POST['first_name']
+            if first_name:           
+                listings = listings.filter(first_name__iexact=first_name)
+        if 'last_name' in request.POST:
+            last_name = request.POST['last_name']
+            if last_name:
+                listings = listings.filter(last_name__iexact=last_name)
+        if 'email' in request.POST:
+            email = request.POST['email']
+            if email:
+                listings = listings.filter(email__iexact=email)
+    context = { "listings": listings, }     
+    return render(request, 'accounts/search.html', context)
 
 def update(request):
     return render(request, 'accounts/update.html')
@@ -70,4 +106,6 @@ def edit(request):
     return render(request, 'accounts/edit.html')
 
 def listing(request):
-    return render(request, 'accounts/listing.html')
+    listings = User.objects.all()
+    context = {'listings' : listings }
+    return render(request, 'accounts/listing.html', context)
