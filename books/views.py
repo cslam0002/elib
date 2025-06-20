@@ -3,7 +3,7 @@ from django.db import models
 
 
 from datetime import date
-
+from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404
 
 from books.models import Book
@@ -111,30 +111,37 @@ def listing(request):
     return render(request, 'books/search.html', context)
 
 def search(request):
-    listings = Book.objects.order_by('title')
-    if request.method == "POST":
-        if 'title' in request.POST:
-            title = request.POST['title']
+    query = request.GET.get('q', '').strip()  # Get search keyword
+    if query:
+        listings = Book.objects.filter(
+            Q(title__icontains=query) |
+            Q(author__icontains=query) |
+            Q(category__icontains=query)
+        ).distinct()
+    else:   
+        listings = Book.objects.order_by('title')
+        if 'title' in request.GET:
+            title = request.GET['title']
             if title:      
                 listings = listings.filter(title__icontains=title)
-        if 'author' in request.POST:
-            author = request.POST['author']
+        if 'author' in request.GET:
+            author = request.GET['author']
             if author:           
                 listings = listings.filter(author__iexact=author)
-        if 'isbn' in request.POST:
-            isbn = request.POST['isbn']
+        if 'isbn' in request.GET:
+            isbn = request.GET['isbn']
             if isbn:
                 listings = listings.filter(isbn__iexact=isbn)            
-        if 'year' in request.POST:
-            year = request.POST['year']
+        if 'year' in request.GET:
+            year = request.GET['year']
             if year:
                 listings = listings.filter(year__iexact=year)
-        if 'language' in request.POST:
-            language = request.POST['language']
+        if 'language' in request.GET:
+            language = request.GET['language']
             if language:
                 listings = listings.filter(language__iexact=language)
-        if 'category' in request.POST:
-            category = request.POST['category']
+        if 'category' in request.GET:
+            category = request.GET['category']
             if category:
                 listings = listings.filter(category__iexact=category)    
 
@@ -142,5 +149,5 @@ def search(request):
     context = { "language_choices" : language_choices, 
                 "category_choices" : category_choices,
                 "listings": listings,
-                "values" : request.POST }       
+                "values" : request.GET }       
     return render(request, 'books/search.html', context)

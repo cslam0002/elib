@@ -9,10 +9,12 @@
         
         <div class="hero-search-container">
             <h3>Find Your Next Great Read</h3>
+            <form action="{% url 'books:search' %}" method="get">
             <div class="hero-search">
-                <input type="text" placeholder="Search by title, author, or keyword...">
+                <input type="text" name="q" placeholder="Search by title, author, or keyword...">
                 <button><i class="fas fa-search"></i> Search</button>
             </div>
+            </form>
         </div>
     </section>
 

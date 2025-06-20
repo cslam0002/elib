@@ -5,8 +5,7 @@
 <!-- Hero Section -->
 <section class="hero">
             <div class="search">
-              <form action="{% url "books:search" %}" method="POST">
-                {% csrf_token %}
+              <form action="{% url "books:search" %}" method="GET">
                 <!-- Form Row 1 -->
                 <div class="form-row">
                   <div class="col-md-4 mb-3">
