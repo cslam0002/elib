@@ -19,53 +19,22 @@
     </section>
 
     <!-- Book Showcase -->
+    {% if listings %}
     <section class="book-showcase">
         <h2 class="section-title">New Arrivals</h2>
         <div class="books">
+            {% for listing in listings %}
             <div class="book">
-                <div class="book-cover" style="background-image: url('https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+                <div class="book-cover" style="background-image: url('{{ listing.cover_url.url }}');"></div>
                 <div class="book-info">
-                    <div class="book-title">The Midnight Library</div>
-                    <div class="book-author">Matt Haig</div>
+                    <div class="book-title">{{ listing.title | title }}</div>
+                    <div class="book-author">{{ listing.author | title }}</div>
                 </div>
             </div>
-            <div class="book">
-                <div class="book-cover" style="background-image: url('https://images.unsplash.com/photo-1629992101753-56d196c8aabb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
-                <div class="book-info">
-                    <div class="book-title">Project Hail Mary</div>
-                    <div class="book-author">Andy Weir</div>
-                </div>
-            </div>
-            <div class="book">
-                <div class="book-cover" style="background-image: url('https://images.unsplash.com/photo-1495640388908-05fa85288e61?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
-                <div class="book-info">
-                    <div class="book-title">Klara and the Sun</div>
-                    <div class="book-author">Kazuo Ishiguro</div>
-                </div>
-            </div>
-            <div class="book">
-                <div class="book-cover" style="background-image: url('https://images.unsplash.com/photo-1531346878377-a5be20888e57?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
-                <div class="book-info">
-                    <div class="book-title">The Last Thing He Told Me</div>
-                    <div class="book-author">Laura Dave</div>
-                </div>
-            </div>
-            <div class="book">
-                <div class="book-cover" style="background-image: url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
-                <div class="book-info">
-                    <div class="book-title">The Four Winds</div>
-                    <div class="book-author">Kristin Hannah</div>
-                </div>
-            </div>
-            <div class="book">
-                <div class="book-cover" style="background-image: url('https://images.unsplash.com/photo-1592496431122-2349e0fbc666?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
-                <div class="book-info">
-                    <div class="book-title">The Silent Patient</div>
-                    <div class="book-author">Alex Michaelides</div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </section>
+    {% endif %}
 
     <!-- Events Section -->
     <section class="events">
