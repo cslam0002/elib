@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path
 
 from django.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('pages.urls', namespace='pages')),
@@ -27,3 +29,6 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
 ]
+
+# register media url
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
