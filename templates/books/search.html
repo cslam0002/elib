@@ -114,9 +114,24 @@
                   <td>{{ listing.title }}</td>
                   <td>{{ listing.author }}</td>
                   <td>{{ listing.isbn }}</td>
-                  <td>{{ listing.language }}</td>
-                  <td>{{ listing.category }}</td>
-
+                  {% if listing.language in language_choices %}
+                  {%  for key, value in language_choices.items %}
+                  {% if key == listing.language %}
+                  <td>{{ value }}</td>
+                  {% endif %}
+                  {% endfor %}
+                  {% else %}
+                  <td></td>
+                  {% endif %}
+                  {% if listing.category in category_choices %}
+                  {%  for key, value in category_choices.items %}
+                  {% if key == listing.category %}
+                  <td>{{ value }}</td>
+                  {% endif %}
+                  {% endfor %}
+                  {% else %}
+                  <td></td>
+                  {% endif %}
                   {% if user.is_staff %}
                   <td>
                     <button class="btn btn-danger" data-url="{% url 'books:delete' listing.id %}" data-id="{{ listing.id }}" data-toggle="modal" data-target="#deleteConfirmModal" >Delete</button>

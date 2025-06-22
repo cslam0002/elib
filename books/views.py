@@ -41,7 +41,10 @@ def delete(request, book_id):
     book.delete()
     
     listings = Book.objects.all()
-    context = {'listings' : listings } 
+    context = { "language_choices" : language_choices, 
+                "category_choices" : category_choices, 
+                'listings' : listings,
+                "value" : request.GET }
     return render(request, 'books/listings.html', context)
     # return render(request, 'accounts/dashboard.html')
 
@@ -51,7 +54,7 @@ def borrow(request, book_id):
     # record.save()
 
     book = Book.objects.get(id=book_id)
-    record = BorrowRecord.objects.create(user=request.user, book=book, status=status_choices['Borrowed'])
+    record = BorrowRecord.objects.create(user=request.user, book=book, status=status_choices['borrowed'])
     record.save()
 
     listings = Book.objects.all()
