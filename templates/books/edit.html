@@ -5,6 +5,7 @@
           <!-- Hero Section -->
           <section class="hero">
             <div class="search">
+            <h2> Add Book </h2> 
               <form action="{% url "books:add" %}" method="POST">
                 {% csrf_token %}
                 <!-- Form Row 1 -->
@@ -59,7 +60,7 @@
                     <label class="sr-only">Language</label>
                     <select name="language" class="form-control">
                       <option {% if not values.language %} selected="true" {% endif %} value="">
-                        (Any language)
+                        (Any Language)
                       </option>
                       {%  for key, value in language_choices.items %}
                       <option value="{{key}}" {%if key == values.language %} selected="true" {% endif %}>{{value}}</option>

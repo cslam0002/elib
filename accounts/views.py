@@ -4,7 +4,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 
-
+from books.models import Book
 from records.models import BorrowRecord
 
 # Create your views here.
@@ -60,18 +60,19 @@ def register(request):
 def delete(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     user.delete()
-
-    listings = BorrowRecord.objects.filter(status__iexact='Borrowed')
-    if (not request.user.is_staff):
-        listings = listings.filter(user=request.user)
-    context = { "listings" : listings }
-    return render(request, 'accounts/dashboard.html', context)
+    return redirect('accounts:dashboard')
 
 def dashboard(request):
-    listings = BorrowRecord.objects.filter(status__iexact='Borrowed')
-    if (not request.user.is_staff):
+    # staff : NEW book arrival in past week + book borrrow out
+    # user  : borrowed books + recommended book list
+    listings = BorrowRecord.objects.all() # filter(status__iexact='borrowed')
+    if (request.user.is_staff):
+        booklists = Book.objects.order_by('-date_arrived')[:5]
+        context = {"listings" : listings , "booklists" : booklists }
+    else:
         listings = listings.filter(user=request.user)
-    context = { "listings" : listings }
+        booklists = Book.objects.order_by('-date_arrived')[:5]
+        context = {"listings" : listings , "booklists" : booklists }
     return render(request, 'accounts/dashboard.html', context)
 
 def reset(request):

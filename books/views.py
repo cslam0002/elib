@@ -32,9 +32,7 @@ def add(request):
                     stock=stock, date_arrived=date_arrived,  # cover_url=cover_url, description=description,
                     language=language, category=category) 
         book.save()
-    listings = Book.objects.all()
-    context = {'listings' : listings }    
-    return render(request, 'books/listings.html', context)
+    return redirect('accounts:dashboard')
 
 def delete(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
@@ -66,9 +64,7 @@ def check_in(request, book_id):
     record = BorrowRecord.objects.filter(user=request.user)
     record = record.filter(book=book)
     record.delete()
-    listings = Book.objects.all()
-    context = {'listings' : listings }
-    return render(request, 'books/listings.html', context)      
+    return redirect('accounts:dashboard')    
 
 
 
