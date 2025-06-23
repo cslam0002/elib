@@ -113,6 +113,11 @@ def listing(request):
 
     return render(request, 'books/search.html', context)
 
+def search_adv(request):
+    context = { "language_choices" : language_choices, 
+                "category_choices" : category_choices, }   
+    return render(request, 'books/search.html', context)
+
 def search(request):
     query = request.GET.get('q', '').strip()  # Get search keyword
     if query:
@@ -153,4 +158,4 @@ def search(request):
                 "category_choices" : category_choices,
                 "listings": listings,
                 "values" : request.GET }       
-    return render(request, 'books/search.html', context)
+    return render(request, 'books/listings.html', context)
