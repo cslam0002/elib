@@ -1,6 +1,7 @@
 {% extends "base.html" %} 
 {% block title %} Home {% endblock %}
 {% block content %}
+{% load static %} 
 
     <!-- Hero Section -->
     <section class="hero">
@@ -25,7 +26,11 @@
         <div class="books">
             {% for listing in listings %}
             <div class="book">
+                {% if listing.cover_url %}
                 <div class="book-cover" style="background-image: url('{{ listing.cover_url.url }}');"></div>
+                {% else %}
+                <div class="book-cover" style="background-image: url('{% static "img/book.jpeg" %}');"></div>
+                {% endif %}
                 <div class="book-info">
                     <div class="book-title">{{ listing.title | title }}</div>
                     <div class="book-author">{{ listing.author | title }}</div>
