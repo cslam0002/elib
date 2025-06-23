@@ -100,9 +100,6 @@ def search(request):
     context = { "listings": listings, }     
     return render(request, 'accounts/search.html', context)
 
-def update(request):
-    return render(request, 'accounts/update.html')
-
 def edit(request):
     return render(request, 'accounts/edit.html')
 
