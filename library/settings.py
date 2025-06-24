@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'books.apps.BooksConfig',
     'records.apps.RecordsConfig',
     'accounts.apps.AccountsConfig',
-
+    'events.apps.EventsConfig',
 
 ]
 

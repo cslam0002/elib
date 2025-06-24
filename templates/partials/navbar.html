@@ -20,6 +20,7 @@
                 {% if user.is_staff %}
                 <li {% if 'books/search' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}><a href={% url "books:search_adv" %} class="nav-link">Search Book</a></li>
                 <li {% if 'books/edit' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}><a href={% url "books:edit" %} class="nav-link">Add Book</a></li>
+                <li {% if 'events/edit' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}><a href={% url "events:edit" %} class="nav-link">Event</a></li>
                 <li {% if 'accounts' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}><a href={% url "accounts:search" %} class="nav-link">ACCOUNTS</a></li>
                 {% else %}
                 <li {% if 'books/search' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}><a href={% url "books:search_adv" %} class="nav-link">Search Book</a></li>

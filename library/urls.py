@@ -26,7 +26,7 @@ urlpatterns = [
     path('books/'   , include('books.urls', namespace='books')),
     path('accounts/', include('accounts.urls', namespace='accounts')),  
     path('records/' , include('records.urls' , namespace='records')),
-
+    path('events/'  , include('events.urls' , namespace='events')),
     path('admin/', admin.site.urls),
 ]
 
