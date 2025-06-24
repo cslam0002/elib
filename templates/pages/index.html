@@ -25,7 +25,7 @@
         <h2 class="section-title">New Arrivals</h2>
         <div class="books">
             {% for listing in listings %}
-            <div class="book">
+            <div class="book" data-url={% url 'books:about' listing.id %} onclick="window.location.href=this.getAttribute('data-url')">
                 {% if listing.cover_url %}
                 <div class="book-cover" style="background-image: url('{{ listing.cover_url.url }}');"></div>
                 {% else %}

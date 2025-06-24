@@ -155,3 +155,10 @@ def search(request):
                 "listings": listings,
                 "values" : request.GET }       
     return render(request, 'books/listings.html', context)
+
+def about(request, book_id):
+    book = Book.objects.get(id=book_id)
+    context = { "language_choices" : language_choices, 
+                "category_choices" : category_choices,
+                "listing": book } 
+    return render(request, 'books/about.html', context)    

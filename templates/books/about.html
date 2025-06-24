@@ -1,0 +1,42 @@
+{% extends "base.html" %} 
+{% block title %} Details {% endblock %}
+{% block content %}
+{% load static %}
+{% load humanize %}
+
+<!-- Hero Section -->
+<section class="hero">
+<h2>{{ listing.title }}</h2>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="image-container">
+                {% if listing.cover_url %}
+                <img src={{ listing.cover_url.url }} style="width: 240px; height: auto;" >
+                {% else %}
+                <img src={% static 'img/book.jpeg' %}  style="width: 240px; height: auto;">
+                {% endif %}
+
+                {% if user.is_authenticated and not user.is_staff %}
+                <a href="{% url 'books:borrow' listing.id %}" class="btn btn-success">Borrow</a>
+                {% endif %}
+              </div>
+        </div>
+        <div class="col-md-8">
+            <div class="text-list">
+                <ul>
+                    <li><strong>Author  </strong>: {{ listing.author | title }}</li>
+                    <li><strong>ISBN    </strong>: {{ listing.isbn }}</li>
+                    <li><strong>Publish Year</strong>: {{ listing.year }}</li>      
+                    <li><strong>Language</strong>: {{ listing.language | title }}</li>
+                    <li><strong>Category</strong>: {{ listing.category | title }}</li>
+                    <li><strong>Description </strong>: {{ listing.description }}</li>      
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</section> 
+
+{% endblock content  %}
