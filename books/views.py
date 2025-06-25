@@ -6,6 +6,7 @@ from datetime import date
 from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404
 
+from django.core.paginator import Paginator
 from books.models import Book
 from records.models import BorrowRecord
 from .choices import language_choices, category_choices, status_choices
@@ -130,7 +131,7 @@ def search(request):
                 listings = listings.filter(title__icontains=title)
         if 'author' in request.GET:
             author = request.GET['author']
-            if author:           
+            if author:
                 listings = listings.filter(author__iexact=author)
         if 'isbn' in request.GET:
             isbn = request.GET['isbn']
@@ -149,10 +150,15 @@ def search(request):
             if category:
                 listings = listings.filter(category__iexact=category)    
 
+    # listings = listings[::-1]
+    paginator = Paginator(listings, 5)
+    page = request.GET.get('page')
+    paged_listings = paginator.get_page(page)
 
     context = { "language_choices" : language_choices, 
                 "category_choices" : category_choices,
-                "listings": listings,
+                # "listings": listings,
+                "listings" : paged_listings, 
                 "values" : request.GET }       
     return render(request, 'books/listings.html', context)
 
