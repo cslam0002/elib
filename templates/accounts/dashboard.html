@@ -15,7 +15,6 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Title</th>
                   <th>Author</th>
                   <th>ISBN</th>
@@ -27,7 +26,6 @@
               <tbody>
                 {% for listing in booklists %}
                 <tr>
-                  <td>{{ listing.id }}</td>
                   <td>{{ listing.title }}</td>
                   <td>{{ listing.author }}</td>
                   <td>{{ listing.isbn }}</td>
@@ -47,7 +45,7 @@
                   {% endif %}
                   {% endfor %}
                   {% else %}
-                  <td></td>
+                  <td>{{ listing.category | title }}</td>
                   {% endif %}
 
                 </tr>
@@ -74,7 +72,6 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Title</th>
                   <th>Due Date</th>
                 </tr>
@@ -83,7 +80,6 @@
               <tbody>
                 {% for listing in listings %}
                 <tr>
-                  <td>{{ listing.book.id }}</td>
                   <td>{{ listing.book.title }}</td>
                   <td>{{ listing.due_date }}</td>
                   {% if not user.is_staff %}

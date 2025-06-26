@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 from books.models import Book
 from records.models import BorrowRecord
+from books.choices import language_choices, category_choices
 
 # Create your views here.
 
@@ -68,11 +69,12 @@ def dashboard(request):
     listings = BorrowRecord.objects.all() # filter(status__iexact='borrowed')
     if (request.user.is_staff):
         booklists = Book.objects.order_by('-date_arrived')[:5]
-        context = {"listings" : listings , "booklists" : booklists }
     else:
         listings = listings.filter(user=request.user)
         booklists = Book.objects.order_by('-date_arrived')[:5]
-        context = {"listings" : listings , "booklists" : booklists }
+    context = {"language_choices" : language_choices, 
+               "category_choices" : category_choices, 
+               "listings" : listings , "booklists" : booklists }
     return render(request, 'accounts/dashboard.html', context)
 
 def reset(request):

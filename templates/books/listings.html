@@ -13,7 +13,6 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Title</th>
                   <th>Author</th>
                   <th>ISBN</th>
@@ -25,7 +24,6 @@
               <tbody>
                 {% for listing in listings %}
                 <tr>
-                  <td>{{ listing.id }}</td>
                   <td>{{ listing.title }}</td>
                   <td>{{ listing.author }}</td>
                   <td>{{ listing.isbn }}</td>
@@ -45,7 +43,7 @@
                   {% endif %}
                   {% endfor %}
                   {% else %}
-                  <td></td>
+                  <td>{{ listing.category | title }}</td>
                   {% endif %}
                   <td><a href="{% url 'books:about' listing.id %}" class="btn btn-success">Detail</a></td>
                 </tr>
